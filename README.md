@@ -14,6 +14,9 @@ Los datos se guardan en PostgreSQL usando una tabla `tasks`.
 - POST /tasks: crea una nueva tarea.
 - PUT /tasks/:id: actualiza una tarea existente.
 - DELETE /tasks/:id: elimina una tarea existente
+- POST /auth/register: registra un usuario.
+- POST /auth/login: inicia sesión y devuelve un token.
+- Las rutas `/tasks` requieren enviar un token JWT en el header `Authorization: Bearer TOKEN`.
 
 
 ## Base de datos
@@ -24,9 +27,9 @@ Tabla: `tasks`
 
 Columnas:
 
--`id`: identificador numérico generado automáticamente.
--`text`: texto obligatorio y único por usuario de la tarea.
--`done`: estado booleano de la tarea, por defecto `false`.
+- `id`: identificador numérico generado automáticamente.
+- `text`: texto obligatorio y único por usuario de la tarea.
+- `done`: estado booleano de la tarea, por defecto `false`.
 
 
 ## Reglas
@@ -34,7 +37,8 @@ Columnas:
 - `text` es obligatorio.
 - `text` no puede estar vacío ni tener solo espacios
 - `done` debe ser booleano.
-- No puede haber tareas duplicadas con el mismo `text`.
+- Un usuario no puede tener tareas duplicadas con el mismo `text`.
+- Usuarios distintos sí pueden tener tareas con el mismo `text`.
 - `id` debe ser numérico.
 - Si una tarea no existe, la API responde `404`.
 
@@ -74,12 +78,41 @@ database/schema.sql
 ## Configuración local
 
 1. Instalar dependencias:
-
-   bash
-   npm install
-
-2. Crear un archivo .env basado en .env.example.
-3. Crear base de datos todo_api en PostgreSQL.
-4. Ejecutar el archivo database/schema.sql.
+```bash
+npm install
+```
+2. Crear un archivo `.env` basado en `.env.example`.
+3. Crear base de datos `todo_api` en PostgreSQL.
+4. Ejecutar el archivo `database/schema.sql`.
 5. Iniciar el servidor:
-   node server.js
+```bash 
+npm start
+```
+
+
+## Tests
+
+El proyecto usa Jest y Supertest para probar rutas principales de la API.
+
+Ejecutar tests:
+```bash
+npm test
+```
+
+Pruebas incluidas:
+- health check
+- registro y login
+- rutas protegidas con JWT
+- creación de tareas
+- validaciones
+- tareas privadas por usuario
+- duplicados por usuario
+
+## Teconologías
+- Node.js
+- Express
+- PostgreSQL
+- JWT
+- bcrypt
+- Jest
+- Supertest
