@@ -108,7 +108,7 @@ Pruebas incluidas:
 - tareas privadas por usuario
 - duplicados por usuario
 
-## Teconologías
+## Tecnologías
 - Node.js
 - Express
 - PostgreSQL
