@@ -31,8 +31,8 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (
-        !email || email.trim() === "" ||
-        !password || password.trim() === ""
+        typeof email !== "string" || email.trim() === "" ||
+        typeof password !== "string" || password.trim() === "" 
     ) {
         return res.status(400).json({ message: "email y password son obligatorios" });
     }
@@ -49,6 +49,7 @@ const login = async (req, res) => {
 
         res.json(result);
     } catch (error) {
+        console.error("Error en POST /auth/login:", error.message);
         res.status(500).json({ message: "Error interno del servidor" });
     }
 };
