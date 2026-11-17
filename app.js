@@ -2,11 +2,12 @@ const express = require("express");
 const taskRoutes = require("./routes/tasks");
 const authRoutes = require ("./routes/auth");
 const cors = require("cors");
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
 
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: frontendUrl
 }));
 
 app.use(express.json());
