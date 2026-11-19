@@ -4,7 +4,15 @@
 
 API básica para crear, listar, actualizar y eliminar tareas.
 
-Los datos se guardan en PostgreSQL usando una tabla `tasks`.
+Los usuarios y tareas se guardan en PostgreSQL.
+
+
+## Demo
+
+- Frontend: [Para abrir Todo App](https://todo-list-frontend-practica.vercel.app/)
+- API: [Para Health check](https://todo-list-backend-practica.onrender.com/health)
+
+Flujo: React en Vercel → API Express en Render → PostgreSQL en Neon.
 
 
 ## Rutas
@@ -23,13 +31,19 @@ Los datos se guardan en PostgreSQL usando una tabla `tasks`.
 
 Base de datos: `todo_api`
 
-Tabla: `tasks`
+ ### Tabla `users`
 
-Columnas:
+ - `id`: identificador numérico generado automáticamente.
+ - `name`: nombre del usuario.
+ - `email`: correo único.
+ - `password_hash`: hash de la contraseña; la API nunca devuelve este campo.
 
-- `id`: identificador numérico generado automáticamente.
-- `text`: texto obligatorio y único por usuario de la tarea.
-- `done`: estado booleano de la tarea, por defecto `false`.
+ ### Tabla `tasks`
+
+ - `id`: identificador numérico generado automáticamente.
+ - `text`: texto obligatorio y único por usuario.
+ - `done`: estado booleano, por defecto `false`.
+ - `user_id`: usuario propietario de la tarea.
 
 
 ## Reglas
@@ -107,6 +121,8 @@ Pruebas incluidas:
 - validaciones
 - tareas privadas por usuario
 - duplicados por usuario
+
+Nota: Las pruebas de integración crean registros; ejecútalas contra la base local o una base de prueba, no contra la base de Neon usada por la demo
 
 ## Tecnologías
 - Node.js
